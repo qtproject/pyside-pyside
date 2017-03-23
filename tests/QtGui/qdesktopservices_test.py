@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the test suite of PySide2.
@@ -26,18 +26,18 @@
 ##
 #############################################################################
 
-import sys
-from helper import adjust_filename
+'''Unit tests for QDesktopServices'''
 
+import unittest
+
+from PySide2.QtGui import QDesktopServices
 from PySide2.QtCore import QUrl
-from PySide2.QtGui import QGuiApplication
-from PySide2.QtQml import QQmlEngine, QQmlComponent
 
-app = QGuiApplication(sys.argv)
+class QDesktopServicesTest(unittest.TestCase):
+    def testOpenUrl(self):
+        # At the bare minimum check that they return false for invalid url's
+        url = QUrl()
+        self.assertEqual(QDesktopServices.openUrl(url), False)
 
-engine = QQmlEngine()
-component = QQmlComponent(engine)
-
-# This should segfault if the QDeclarativeComponent has not QQmlEngine
-component.loadUrl(QUrl.fromLocalFile(adjust_filename('foo.qml', __file__)))
-
+if __name__ == '__main__':
+    unittest.main()

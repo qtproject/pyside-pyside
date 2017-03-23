@@ -3172,6 +3172,9 @@
   </object-type>
   <object-type name="QSignalMapper" />
 
+  <object-type name="QCollatorSortKey" since="5.2" />
+  <object-type name="QCollator" since="5.2" />
+
   <object-type name="QCoreApplication">
     <!--Qt5: gone <enum-type name="Encoding" /> -->
     <enum-type identified-by-value="ApplicationFlags" since="4.8" revision="4800"/>
@@ -3605,6 +3608,10 @@
     <modify-function signature="read(qint64)" allow-thread="yes"/>
     <modify-function signature="readLine(qint64)" allow-thread="yes"/>
     <modify-function signature="readAll()" allow-thread="yes"/>
+  </object-type>
+  <object-type name="QStandardPaths" since="5.0">
+    <enum-type name="StandardLocation"/>
+    <enum-type name="LocateOption" flags="LocateOptions"/>
   </object-type>
   <object-type name="QSystemSemaphore">
     <enum-type name="AccessMode"/>

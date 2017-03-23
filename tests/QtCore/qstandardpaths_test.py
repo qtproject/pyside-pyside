@@ -1,6 +1,8 @@
+#!/usr/bin/python
+
 #############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the test suite of PySide2.
@@ -26,18 +28,23 @@
 ##
 #############################################################################
 
+'''Unit tests for QStandardPaths'''
+
+import unittest
+import ctypes
 import sys
-from helper import adjust_filename
 
-from PySide2.QtCore import QUrl
-from PySide2.QtGui import QGuiApplication
-from PySide2.QtQml import QQmlEngine, QQmlComponent
+from PySide2.QtCore import QStandardPaths
 
-app = QGuiApplication(sys.argv)
+class QStandardPathsTest(unittest.TestCase):
+    def testTestModeEnabled(self):
+        print("QStandardPaths.isTestModeEnabled:", QStandardPaths.isTestModeEnabled())
+        sp = True
+        QStandardPaths.setTestModeEnabled(sp)
+        self.assertEqual(QStandardPaths.isTestModeEnabled(), sp)
+        sp = False
+        QStandardPaths.setTestModeEnabled(sp)
+        self.assertEqual(QStandardPaths.isTestModeEnabled(), sp)
 
-engine = QQmlEngine()
-component = QQmlComponent(engine)
-
-# This should segfault if the QDeclarativeComponent has not QQmlEngine
-component.loadUrl(QUrl.fromLocalFile(adjust_filename('foo.qml', __file__)))
-
+if __name__ == '__main__':
+    unittest.main()

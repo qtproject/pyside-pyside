@@ -1,6 +1,8 @@
+#!/usr/bin/python
+
 #############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the test suite of PySide2.
@@ -26,18 +28,34 @@
 ##
 #############################################################################
 
+'''Unit tests for QCollator'''
+
+import unittest
+import ctypes
 import sys
-from helper import adjust_filename
 
-from PySide2.QtCore import QUrl
-from PySide2.QtGui import QGuiApplication
-from PySide2.QtQml import QQmlEngine, QQmlComponent
+from PySide2.QtCore import *
 
-app = QGuiApplication(sys.argv)
+class QCollatorTest(unittest.TestCase):
+    def testState(self):
+        c = QCollator()
+        c.setCaseSensitivity(Qt.CaseInsensitive)
+        c.setLocale(QLocale.German)
 
-engine = QQmlEngine()
-component = QQmlComponent(engine)
+        print("compare a and b:", c.compare("a", "b"))
 
-# This should segfault if the QDeclarativeComponent has not QQmlEngine
-component.loadUrl(QUrl.fromLocalFile(adjust_filename('foo.qml', __file__)))
+        self.assertEqual(c.caseSensitivity(), Qt.CaseInsensitive)
+        self.assertEqual(c.locale(), QLocale(QLocale.German))
 
+        c.setLocale(QLocale.French)
+        c.setNumericMode(True)
+        c.setIgnorePunctuation(True)
+        c.setLocale(QLocale.Norwegian)
+
+        self.assertEqual(c.caseSensitivity(), Qt.CaseInsensitive)
+        self.assertEqual(c.numericMode(), True)
+        self.assertEqual(c.ignorePunctuation(), True)
+        self.assertEqual(c.locale(), QLocale(QLocale.Norwegian))
+
+if __name__ == '__main__':
+    unittest.main()
